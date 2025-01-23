@@ -8,14 +8,18 @@ public class Venta {
     private int idVehiculo;
     private Date fechaVenta;
     private double monto;
+    private double comision;
+    private int idEmpleado;
 
     // Constructor
-    public Venta(int idVenta, int idCliente, int idVehiculo, Date fechaVenta, double monto) {
+    public Venta(int idVenta, int idCliente, int idVehiculo, Date fechaVenta, double monto, double comision, int idEmpleado) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.idVehiculo = idVehiculo;
         this.fechaVenta = fechaVenta;
         this.monto = monto;
+        this.comision = comision;
+        this.idEmpleado = idEmpleado;
     }
 
     // Getters y setters
@@ -57,5 +61,17 @@ public class Venta {
 
     public void setMonto(double monto) {
         this.monto = monto;
+    }
+    public double getComision() {
+        return comision;
+    }
+    public void setComision(double comision) {
+        this.comision = comision;
+    }
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 }

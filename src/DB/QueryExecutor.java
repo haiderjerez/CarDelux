@@ -6,7 +6,7 @@ public class QueryExecutor {
 
     // Ejecutar una consulta SELECT
     public static ResultSet executeQuery(String query) {
-        try (Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = ConexionBD.obtenerConexion();
              Statement statement = connection.createStatement()) {
             return statement.executeQuery(query);
         } catch (SQLException e) {
@@ -17,7 +17,7 @@ public class QueryExecutor {
 
     // Ejecutar una consulta UPDATE, INSERT, DELETE
     public static int executeUpdate(String query) {
-        try (Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = ConexionBD.obtenerConexion();
              Statement statement = connection.createStatement()) {
             return statement.executeUpdate(query);
         } catch (SQLException e) {
@@ -28,7 +28,7 @@ public class QueryExecutor {
 
     // Ejecutar consultas preparadas con parámetros
     public static ResultSet executePreparedQuery(String query, Object[] params) {
-        try (Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = ConexionBD.obtenerConexion();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
@@ -41,7 +41,7 @@ public class QueryExecutor {
     }
 
     public static int executePreparedUpdate(String query, Object[] params) {
-        try (Connection connection = DatabaseConnection.getConnection();
+        try (Connection connection = ConexionBD.obtenerConexion();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);

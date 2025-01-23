@@ -11,7 +11,7 @@ import java.util.List;
 public class DepartamentoController {
 
     // Listar todos los departamentos
-    public List<Departamento> listarDepartamentos() {
+    public static List<Departamento> listarDepartamentos() {
         List<Departamento> departamentos = new ArrayList<>();
         String query = "SELECT * FROM Departamentos";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -31,23 +31,25 @@ public class DepartamentoController {
     }
 
     // Agregar un nuevo departamento
-    public void agregarDepartamento(Departamento departamento) {
+    public static void agregarDepartamento(String nombre, String descripcion) {
         String query = "INSERT INTO Departamentos(nombre, descripcion) VALUES(?, ?)";
-        Object[] params = {departamento.getNombre(), departamento.getDescripcion()};
+        Object[] params = {nombre, descripcion};
         QueryExecutor.executePreparedUpdate(query, params);
     }
 
     // Actualizar un departamento existente
-    public void actualizarDepartamento(Departamento departamento) {
+    public static boolean actualizarDepartamento(int idDepartamento, String nuevoNombre, String nuevaDescripcion) {
         String query = "UPDATE Departamentos SET nombre = ?, descripcion = ? WHERE id_departamento = ?";
-        Object[] params = {departamento.getNombre(), departamento.getDescripcion(), departamento.getIdDepartamento()};
+        Object[] params = {nuevoNombre, nuevaDescripcion, idDepartamento};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 
     // Eliminar un departamento
-    public void eliminarDepartamento(int idDepartamento) {
+    public static boolean eliminarDepartamento(int idDepartamento) {
         String query = "DELETE FROM Departamentos WHERE id_departamento = ?";
         Object[] params = {idDepartamento};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

@@ -1,5 +1,9 @@
 package View;
 
+import Controller.ServicioController;
+import Model.Servicio;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class ServicioView {
@@ -46,21 +50,70 @@ public class ServicioView {
 
     private void registrarServicio() {
         System.out.println("Registro de un nuevo servicio");
-        // Lógica para registrar servicio (ingreso de datos)
+        System.out.print("Ingrese el nombre del servicio: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Ingrese la descripción del servicio: ");
+        String descripcion = scanner.nextLine();
+
+        System.out.print("Ingrese el precio del servicio: ");
+        double precio = scanner.nextDouble();
+        scanner.nextLine();
+
+        boolean registrado = ServicioController.agregarServicio(nombre, descripcion, precio);
+
+        if (registrado) {
+            System.out.println("Servicio registrado exitosamente.");
+        } else {
+            System.out.println("Ocurrió un error al registrar el servicio.");
+        }
     }
 
     private void listarServicios() {
         System.out.println("Listando servicios...");
-        // Lógica para listar servicios registrados
+        List<Servicio> servicios = ServicioController.listarServicios();
+
+        if (servicios.isEmpty()) {
+            System.out.println("No hay servicios registrados.");
+        } else {
+            for (Servicio servicio : servicios) {
+                System.out.println(servicio);
+            }
+        }
     }
 
     private void modificarServicio() {
         System.out.println("Modificando servicio");
-        // Lógica para modificar datos de un servicio
+        System.out.print("Ingrese el ID del servicio a modificar: ");
+        int idServicio = scanner.nextInt();
+        scanner.nextLine(); 
+
+        System.out.print("Ingrese la nueva descripción del servicio: ");
+        String nuevaDescripcion = scanner.nextLine();
+
+        System.out.print("Ingrese el nuevo precio del servicio: ");
+        double nuevoPrecio = scanner.nextDouble();
+        scanner.nextLine();
+
+        Servicio servicio = new Servicio(idServicio, nuevaDescripcion, nuevoPrecio);
+        ServicioController servicioController = new ServicioController();
+        servicioController.actualizarServicio(servicio);
+
+        System.out.println("Servicio modificado exitosamente.");
     }
 
     private void eliminarServicio() {
         System.out.println("Eliminando servicio");
-        // Lógica para eliminar servicio
+        System.out.print("Ingrese el ID del servicio a eliminar: ");
+        int idServicio = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer
+
+        boolean eliminado = ServicioController.eliminarServicio(idServicio);
+
+        if (eliminado) {
+            System.out.println("Servicio eliminado exitosamente.");
+        } else {
+            System.out.println("No se encontró un servicio con el ID proporcionado o no se pudo eliminar.");
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class ServicioController {
 
     // Listar todos los servicios
-    public List<Servicio> listarServicios() {
+    public static List<Servicio> listarServicios() {
         List<Servicio> servicios = new ArrayList<>();
         String query = "SELECT * FROM Servicios";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -31,10 +31,11 @@ public class ServicioController {
     }
 
     // Agregar un nuevo servicio
-    public void agregarServicio(Servicio servicio) {
+    public static boolean agregarServicio(String descripcion, String s, double precio) {
         String query = "INSERT INTO Servicios(descripcion, precio) VALUES(?, ?)";
-        Object[] params = {servicio.getDescripcion(), servicio.getPrecio()};
+        Object[] params = {descripcion, precio};
         QueryExecutor.executePreparedUpdate(query, params);
+        return true;
     }
 
     // Actualizar un servicio existente
@@ -45,9 +46,10 @@ public class ServicioController {
     }
 
     // Eliminar un servicio
-    public void eliminarServicio(int idServicio) {
+    public static boolean eliminarServicio(int idServicio) {
         String query = "DELETE FROM Servicios WHERE id_servicio = ?";
         Object[] params = {idServicio};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

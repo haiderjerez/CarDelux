@@ -11,7 +11,7 @@ import java.util.List;
 public class ProveedorController {
 
     // Listar todos los proveedores
-    public List<Proveedor> listarProveedores() {
+    public static List<Proveedor> listarProveedores() {
         List<Proveedor> proveedores = new ArrayList<>();
         String query = "SELECT * FROM Proveedores";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -33,23 +33,26 @@ public class ProveedorController {
     }
 
     // Agregar un nuevo proveedor
-    public void agregarProveedor(Proveedor proveedor) {
+    public static boolean agregarProveedor(String nombre, String contacto, String telefono, String direccion) {
         String query = "INSERT INTO Proveedores(nombre, contacto, telefono, direccion) VALUES(?, ?, ?, ?)";
-        Object[] params = {proveedor.getNombre(), proveedor.getContacto(), proveedor.getTelefono(), proveedor.getDireccion()};
+        Object[] params = {nombre, contacto, telefono, direccion};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 
     // Actualizar un proveedor existente
-    public void actualizarProveedor(Proveedor proveedor) {
+    public static boolean actualizarProveedor(int idProveedor, String nuevoNombre, String nuevoContacto, String nuevoTelefono, String nuevaDireccion) {
         String query = "UPDATE Proveedores SET nombre = ?, contacto = ?, telefono = ?, direccion = ? WHERE id_proveedor = ?";
-        Object[] params = {proveedor.getNombre(), proveedor.getContacto(), proveedor.getTelefono(), proveedor.getDireccion(), proveedor.getIdProveedor()};
+        Object[] params = {nuevoNombre, nuevoContacto, nuevoTelefono, nuevaDireccion, idProveedor};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 
     // Eliminar un proveedor
-    public void eliminarProveedor(int idProveedor) {
+    public static boolean eliminarProveedor(int idProveedor) {
         String query = "DELETE FROM Proveedores WHERE id_proveedor = ?";
         Object[] params = {idProveedor};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

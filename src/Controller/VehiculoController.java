@@ -11,7 +11,7 @@ import java.util.List;
 public class VehiculoController {
 
     // Listar todos los vehículos
-    public List<Vehiculo> listarVehiculos() {
+    public static List<Vehiculo> listarVehiculos() {
         List<Vehiculo> vehiculos = new ArrayList<>();
         String query = "SELECT * FROM Vehiculos";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -34,23 +34,26 @@ public class VehiculoController {
     }
 
     // Agregar un nuevo vehículo
-    public void agregarVehiculo(Vehiculo vehiculo) {
+    public static boolean agregarVehiculo(String marca, String modelo, int year_carro, double precio) {
         String query = "INSERT INTO Vehiculos(marca, modelo, year_carro, id_estados, precio) VALUES(?, ?, ?, ?, ?)";
-        Object[] params = {vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getYearCarro(), vehiculo.getIdEstado(), vehiculo.getPrecio()};
+        Object[] params = {marca, modelo, year_carro, 1, precio}; // Assuming default id_estados = 1
         QueryExecutor.executePreparedUpdate(query, params);
+        return true;
     }
 
     // Actualizar un vehículo existente
-    public void actualizarVehiculo(Vehiculo vehiculo) {
-        String query = "UPDATE Vehiculos SET marca = ?, modelo = ?, year_carro = ?, id_estados = ?, precio = ? WHERE id_vehiculo = ?";
-        Object[] params = {vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getYearCarro(), vehiculo.getIdEstado(), vehiculo.getPrecio(), vehiculo.getIdVehiculo()};
+    public static boolean actualizarVehiculo(int idVehiculo, String nuevaMarca, String nuevoModelo, int nuevoAnio, double nuevoPrecio) {
+        String query = "UPDATE Vehiculos SET marca = ?, modelo = ?, year_carro = ?, precio = ? WHERE id_vehiculo = ?";
+        Object[] params = {nuevaMarca, nuevoModelo, nuevoAnio, nuevoPrecio, idVehiculo};
         QueryExecutor.executePreparedUpdate(query, params);
+        return true;
     }
 
     // Eliminar un vehículo
-    public void eliminarVehiculo(int idVehiculo) {
+    public static boolean eliminarVehiculo(int idVehiculo) {
         String query = "DELETE FROM Vehiculos WHERE id_vehiculo = ?";
         Object[] params = {idVehiculo};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

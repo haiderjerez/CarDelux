@@ -11,7 +11,7 @@ import java.util.List;
 public class ClienteController {
 
     // Listar todos los clientes
-    public List<Cliente> listarClientes() {
+    public static List<Cliente> listarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         String query = "SELECT * FROM Clientes";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -33,23 +33,24 @@ public class ClienteController {
     }
 
     // Agregar un nuevo cliente
-    public void agregarCliente(Cliente cliente) {
-        String query = "INSERT INTO Clientes(nombre, email, telefono, direccion) VALUES(?, ?, ?, ?)";
-        Object[] params = {cliente.getNombre(), cliente.getEmail(), cliente.getTelefono(), cliente.getDireccion()};
-        QueryExecutor.executePreparedUpdate(query, params);
+    public static boolean agregarCliente(Cliente cliente) {
+        String query = "INSERT INTO Clientes(nombre, telefono, direccion) VALUES(?, ?, ?, ?)";
+        Object[] params = {cliente.getNombre(), cliente.getTelefono(), cliente.getDireccion()};
+        return QueryExecutor.executePreparedUpdate(query, params) > 0;
     }
 
-    // Actualizar un cliente existente
-    public void actualizarCliente(Cliente cliente) {
-        String query = "UPDATE Clientes SET nombre = ?, email = ?, telefono = ?, direccion = ? WHERE id_cliente = ?";
-        Object[] params = {cliente.getNombre(), cliente.getEmail(), cliente.getTelefono(), cliente.getDireccion(), cliente.getIdCliente()};
-        QueryExecutor.executePreparedUpdate(query, params);
+    // Actualizar un cliente
+    public static boolean actualizarCliente(int idCliente, String nuevoNombre, String nuevoDireccion, String nuevoTelefono) {
+        String query = "UPDATE Clientes SET nombre = ?, telefono = ?, direccion = ? WHERE id_cliente = ?";
+        Object[] params = {nuevoNombre, nuevoTelefono, nuevoDireccion, idCliente};
+        return QueryExecutor.executePreparedUpdate(query, params) > 0;
     }
 
     // Eliminar un cliente
-    public void eliminarCliente(int idCliente) {
+    public static boolean eliminarCliente(int idCliente) {
         String query = "DELETE FROM Clientes WHERE id_cliente = ?";
         Object[] params = {idCliente};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

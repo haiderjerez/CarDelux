@@ -11,7 +11,7 @@ import java.util.List;
 public class EmpleadoController {
 
     // Listar todos los empleados
-    public List<Empleado> listarEmpleados() {
+    public static List<Empleado> listarEmpleados() {
         List<Empleado> empleados = new ArrayList<>();
         String query = "SELECT * FROM Empleados";
         ResultSet rs = QueryExecutor.executeQuery(query);
@@ -33,23 +33,26 @@ public class EmpleadoController {
     }
 
     // Agregar un nuevo empleado
-    public void agregarEmpleado(Empleado empleado) {
+    public static boolean agregarEmpleado(String nombre, String apellido, String cargo, double salario) {
         String query = "INSERT INTO Empleados(nombre, puesto, telefono, salario) VALUES(?, ?, ?, ?)";
-        Object[] params = {empleado.getNombre(), empleado.getPuesto(), empleado.getTelefono(), empleado.getSalario()};
+        Object[] params = {nombre, apellido, cargo, salario};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 
     // Actualizar un empleado existente
-    public void actualizarEmpleado(Empleado empleado) {
+    public static boolean actualizarEmpleado(int idEmpleado, String nuevoNombre, String nuevoApellido, String nuevoPuesto, double nuevoSalario) {
         String query = "UPDATE Empleados SET nombre = ?, puesto = ?, telefono = ?, salario = ? WHERE id_empleado = ?";
-        Object[] params = {empleado.getNombre(), empleado.getPuesto(), empleado.getTelefono(), empleado.getSalario(), empleado.getIdEmpleado()};
+        Object[] params = {nuevoNombre, nuevoApellido, nuevoPuesto, nuevoSalario, idEmpleado};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 
     // Eliminar un empleado
-    public void eliminarEmpleado(int idEmpleado) {
+    public static boolean eliminarEmpleado(int idEmpleado) {
         String query = "DELETE FROM Empleados WHERE id_empleado = ?";
         Object[] params = {idEmpleado};
         QueryExecutor.executePreparedUpdate(query, params);
+        return false;
     }
 }

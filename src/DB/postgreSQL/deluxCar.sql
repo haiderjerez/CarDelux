@@ -48,7 +48,7 @@ CREATE TABLE Vehiculos (
     precio DECIMAL(10,2)
 );
 
-CREATE TABLE Empleados (
+CREATE TABLE Empleados (    
     id_empleado SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     apellido VARCHAR(100),

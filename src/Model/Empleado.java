@@ -3,14 +3,16 @@ package Model;
 public class Empleado {
     private int idEmpleado;
     private String nombre;
+    private String apellido;
     private String puesto;
     private String telefono;
     private double salario;
 
     // Constructor
-    public Empleado(int idEmpleado, String nombre, String puesto, String telefono, double salario) {
+    public Empleado(int idEmpleado, String nombre, String apellido, String puesto, double salario) {
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.puesto = puesto;
         this.telefono = telefono;
         this.salario = salario;
@@ -31,6 +33,14 @@ public class Empleado {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido(){
+        return apellido;
+    }
+
+    public void setApellido(String apellido){
+        this.apellido = apellido;
     }
 
     public String getPuesto() {
